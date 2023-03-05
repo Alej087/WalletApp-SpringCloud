@@ -3,6 +3,7 @@ package com.dh.movie.service;
 
 import com.dh.movie.model.Movie;
 import com.dh.movie.repository.MovieRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
