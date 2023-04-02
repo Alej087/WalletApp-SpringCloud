@@ -31,7 +31,7 @@ public class CatalogController {
 		return ResponseEntity.ok(movieServiceClient.getMovieByGenre(genre));
 	}*/
 
-	@GetMapping("/{genre}")
+	@GetMapping("/{genre}")/*ONLINE*/
 	MovieSerieDTO getSerieByGenre(@PathVariable String genre) {
 		List<MovieServiceClient.MovieDto> movie =  movieServiceClient.getMovieByGenre(genre);
 		List<SerieServiceClient.SerieDTO> serie = serieServiceClient.getSeriesByGenre(genre);
