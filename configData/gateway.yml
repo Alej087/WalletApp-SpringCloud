@@ -14,7 +14,8 @@ spring:
           uri: lb://catalog-service
           predicates:
             - Path=/api/v1/catalog/**
-
+  zipkin:
+    baseUrl: http://localhost:9411/
 info:
   app:
     name: ${spring.application.name}

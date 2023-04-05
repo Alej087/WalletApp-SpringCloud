@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: catalog-service
+  zipkin:
+    baseUrl: http://localhost:9411/
 eureka:
   client:
     service-url:
