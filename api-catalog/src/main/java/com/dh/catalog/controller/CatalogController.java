@@ -3,6 +3,7 @@ package com.dh.catalog.controller;
 import com.dh.catalog.client.MovieServiceClient;
 
 import com.dh.catalog.client.SerieServiceClient;
+import com.dh.catalog.service.CatalogService;
 import lombok.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +20,12 @@ public class CatalogController {
 	private final MovieServiceClient movieServiceClient;
 	private final SerieServiceClient serieServiceClient;
 
-	public CatalogController(MovieServiceClient movieServiceClient, SerieServiceClient serieServiceClient) {
+	private final CatalogService catalogService;
+
+	public CatalogController(MovieServiceClient movieServiceClient, SerieServiceClient serieServiceClient, CatalogService catalogService) {
 		this.movieServiceClient = movieServiceClient;
 		this.serieServiceClient = serieServiceClient;
+		this.catalogService = catalogService;
 	}
 
 	@GetMapping("/movies/{genre}")
@@ -34,12 +38,17 @@ public class CatalogController {
 		return serieServiceClient.getSerieByGenre(genre);
 	}
 
-	@GetMapping("/{genre}")
+	@GetMapping("/{genre}")/*ONLINE*/
 	MovieAndSerieDTO getMovieAndSerieByGenre(@PathVariable String genre){
 		List<MovieServiceClient.MovieDto> movies = movieServiceClient.getMovieByGenre(genre);
 		List<SerieServiceClient.SerieDTO> series = serieServiceClient.getSerieByGenre(genre);
 		MovieAndSerieDTO movieAndSerieDTO = new MovieAndSerieDTO(movies,series);
 		return movieAndSerieDTO;
+	}
+
+	@GetMapping("/offline/{genre}")/*OFFLINE*/
+	List<MovieServiceClient.MovieDto> getMovieAndSerieByGenreOffline(@PathVariable String genre){
+	return catalogService.getAllMoviesByGenre(genre);
 	}
 
 	@Setter

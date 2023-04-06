@@ -38,7 +38,7 @@ public class Serie {
         @Getter
         public static class Chapter {
 
-          private String name;
+            private String name;
             private Integer number;
             private String urlStream;
 
