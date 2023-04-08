@@ -22,7 +22,9 @@ public interface MovieServiceClient {
 
 	@Getter
 	@Setter
+	@Document(collection = "Movies")
 	class MovieDto{
+		@Id
 		private Long id;
 
 		private String name;

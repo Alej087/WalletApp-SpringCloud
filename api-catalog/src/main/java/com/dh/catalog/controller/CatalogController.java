@@ -1,7 +1,6 @@
 package com.dh.catalog.controller;
 
 import com.dh.catalog.client.MovieServiceClient;
-
 import com.dh.catalog.client.SerieServiceClient;
 import com.dh.catalog.service.CatalogService;
 import lombok.*;
@@ -17,38 +16,36 @@ import java.util.List;
 @RequestMapping("/api/v1/catalog")
 public class CatalogController {
 
-	private final MovieServiceClient movieServiceClient;
-	private final SerieServiceClient serieServiceClient;
-
 	private final CatalogService catalogService;
 
-	public CatalogController(MovieServiceClient movieServiceClient, SerieServiceClient serieServiceClient, CatalogService catalogService) {
-		this.movieServiceClient = movieServiceClient;
-		this.serieServiceClient = serieServiceClient;
+	public CatalogController(CatalogService catalogService) {
 		this.catalogService = catalogService;
 	}
 
-	@GetMapping("/movies/{genre}")
+	@GetMapping("/movies/{genre}")/*ONLINE*/
 	ResponseEntity<List<MovieServiceClient.MovieDto>> getGenre(@PathVariable String genre) {
-		return ResponseEntity.ok(movieServiceClient.getMovieByGenre(genre));
+		return ResponseEntity.ok(catalogService.getMovieOnlineByGenre(genre));
 	}
 
-	@GetMapping("/series/{genre}")
+	@GetMapping("/series/{genre}")/*ONLINE*/
 	List<SerieServiceClient.SerieDTO> getSerieByGenre(@PathVariable String genre) {
-		return serieServiceClient.getSerieByGenre(genre);
+		return catalogService.getSerieOnlineByGenre(genre);
 	}
 
-	@GetMapping("/{genre}")/*ONLINE*/
-	MovieAndSerieDTO getMovieAndSerieByGenre(@PathVariable String genre){
-		List<MovieServiceClient.MovieDto> movies = movieServiceClient.getMovieByGenre(genre);
-		List<SerieServiceClient.SerieDTO> series = serieServiceClient.getSerieByGenre(genre);
+	@GetMapping("/online/{genre}")/*ONLINE*/
+	MovieAndSerieDTO getMovieAndSerieOnlineByGenre(@PathVariable String genre){
+		List<MovieServiceClient.MovieDto> movies = catalogService.getMovieOnlineByGenre(genre);
+		List<SerieServiceClient.SerieDTO> series = catalogService.getSerieOnlineByGenre(genre);
 		MovieAndSerieDTO movieAndSerieDTO = new MovieAndSerieDTO(movies,series);
 		return movieAndSerieDTO;
 	}
 
 	@GetMapping("/offline/{genre}")/*OFFLINE*/
-	List<MovieServiceClient.MovieDto> getMovieAndSerieByGenreOffline(@PathVariable String genre){
-	return catalogService.getAllMoviesByGenre(genre);
+	MovieAndSerieDTO getMovieAndSerieByGenreOffline(@PathVariable String genre){
+	List<MovieServiceClient.MovieDto> movies = catalogService.getAllMoviesOfflineByGenre(genre);
+	List<SerieServiceClient.SerieDTO> series = catalogService.getAllSeriesOfflineByGenre(genre);
+	MovieAndSerieDTO movieAndSerieDTO = new MovieAndSerieDTO(movies,series);
+	return movieAndSerieDTO;
 	}
 
 	@Setter

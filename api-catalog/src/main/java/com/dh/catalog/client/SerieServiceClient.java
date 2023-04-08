@@ -24,7 +24,9 @@ public interface SerieServiceClient {
 
     @Setter
     @Getter
+    @Document("Series")
     class SerieDTO{
+        @Id
         private String id;
         private String name;
         private String genre;
