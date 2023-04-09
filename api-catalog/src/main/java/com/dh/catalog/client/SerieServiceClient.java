@@ -24,6 +24,8 @@ public interface SerieServiceClient {
 
     @Setter
     @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
     @Document("Series")
     class SerieDTO{
         @Id
@@ -31,6 +33,7 @@ public interface SerieServiceClient {
         private String name;
         private String genre;
         private List<Season> seasons = new ArrayList<>();
+
 
         @AllArgsConstructor
         @NoArgsConstructor
